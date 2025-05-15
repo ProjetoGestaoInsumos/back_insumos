@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database.db import Base, engine
-from app.api import auth, resources
+from app.api import auth, resources, upload, media
 
 Base.metadata.create_all(bind=engine)
 
@@ -17,3 +17,5 @@ app.add_middleware(
 
 app.include_router(auth.router, prefix="/auth")
 app.include_router(resources.router, prefix="/items")
+app.include_router(upload.router, prefix="/files") 
+app.include_router(media.router, prefix="/files")
