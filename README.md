@@ -1,5 +1,19 @@
 # Back-Insumos
 
+## branch feature/test-image-new
+**COMO TESTAR**:
+COMO TESTAR O BANCO E FAZER A REQUISIÇÃO DE IMAGENS: (arquivo mais detalhado dentro do repositório) <br>
+
+crie um arquivo .env na raíz da pasta (apenas .env, sem nenhum nome antes ou depois)<br>
+
+Coloque dentro do arquivo -  DATABASE_URL= (sua database URL do Render)<br>
+Certifique-se de baixar as bibliotecas que estão no arquivo requirements.txt<br>
+Abra o terminal e utilize o comando "uvicorn main:app --reload" (sem aspas) <br>
+Entre no link fornecido que deverá ser algo como: http://127.0.0.1:8000<br>
+Escreva "/docs" depois do link, que ficará algo como: http://127.0.0.1:8000/docs<br>
+Utilize GET /api/test-conn/ para testar a conexão com o banco<br>
+Utilize o POST files/upload-image/ para enviar uma imagem ao banco de dados<br>
+Dentro do banco vá na Query Tool e digite SELECT * FROM images;    para ver se a imagem foi enviada corretamente ao banco <br>
 ## Descrição dos Diretórios
 
 - **api/**: Contém as rotas da API. Aqui estão as definições das rotas para os recursos e a autenticação.
