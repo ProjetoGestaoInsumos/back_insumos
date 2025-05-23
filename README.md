@@ -2,7 +2,7 @@
 
 ## branch feature/test-image-new
 **COMO TESTAR**:
-COMO TESTAR O BANCO E FAZER A REQUISIÇÃO DE IMAGENS: (arquivo mais detalhado dentro do repositório) <br>
+COMO TESTAR O BANCO E FAZER A REQUISIÇÃO DE IMAGENS: (arquivo mais detalhado dentro do repositório chamado guia_db.docx) <br>
 
 crie um arquivo .env na raíz da pasta (apenas .env, sem nenhum nome antes ou depois)<br>
 
