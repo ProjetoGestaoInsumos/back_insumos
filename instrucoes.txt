@@ -1,0 +1,12 @@
+COMO TESTAR O BANCO E FAZER A REQUISIÇÃO DE IMAGENS:
+
+crie um arquivo .env na raíz da pasta (apenas .env, sem nenhum nome antes ou depois)
+
+Coloque dentro do arquivo -  DATABASE_URL= (sua database URL do Render)
+Certifique-se de baixar as bibliotecas que estão no arquivo requirements.txt
+Abra o terminal e utilize o comando "uvicorn main:app --reload" (sem aspas) 
+Entre no link fornecido que deverá ser algo como: http://127.0.0.1:8000
+Escreva "/docs" depois do link, que ficará algo como: http://127.0.0.1:8000/docs
+Utilize GET /api/test-conn/ para testar a conexão com o banco
+Utilize o POST files/upload-image/ para enviar uma imagem ao banco de dados
+Dentro do banco vá na Query Tool e digite SELECT * FROM images;    para ver se a imagem foi enviada corretamente ao banco 
