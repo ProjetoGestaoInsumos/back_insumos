@@ -1,4 +1,4 @@
-COMO TESTAR O BANCO E FAZER A REQUISIÇÃO DE IMAGENS:
+COMO TESTAR O BANCO E FAZER A REQUISIÇÃO DE IMAGENS: (arquivo mais detalhado dentro do repositório)
 
 crie um arquivo .env na raíz da pasta (apenas .env, sem nenhum nome antes ou depois)
 
