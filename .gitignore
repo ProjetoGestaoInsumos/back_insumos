@@ -1,0 +1,16 @@
+# Ignora variáveis de ambiente
+.env
+
+# Cache do Python
+__pycache__/
+*.pyc
+
+# Diretório de migrações do Alembic (se quiser ignorar versões locais)
+alembic/versions/
+
+# Configurações de IDEs
+.vscode/
+.idea/
+
+# Logs
+*.log
