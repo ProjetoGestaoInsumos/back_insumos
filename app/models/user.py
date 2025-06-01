@@ -7,4 +7,4 @@ class User(Base):
     name = Column(String, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String, nullable=False)
-    role = Column(Enum('admin', 'técnico', 'professor', name='user_roles'), nullable=False)
+    role = Column(Enum('admin', 'tecnico', 'professor', name='user_roles'), nullable=False)
