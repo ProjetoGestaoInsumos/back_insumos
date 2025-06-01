@@ -3,15 +3,9 @@ from sqlalchemy.orm import Session
 from app.schemas.item_schema import ItemCreate, ItemOut
 from app.services.item_service import get_items, create_item
 from app.database.db import SessionLocal
+from app.database.db import get_db
 
 router = APIRouter()
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.get("/", response_model=list[ItemOut])
 def read_items(db: Session = Depends(get_db)):
