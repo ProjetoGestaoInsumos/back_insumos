@@ -1,5 +1,4 @@
 from pydantic import BaseModel, EmailStr, field_validator
-from typing import Literal
 from enum import Enum
 
 class UserRole(str, Enum):
