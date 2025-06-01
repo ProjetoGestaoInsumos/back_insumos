@@ -1,15 +1,9 @@
-from passlib.context import CryptContext
 from jose import JWTError, jwt
-from datetime import datetime, timedelta
-from typing import Optional
-from app.schemas.user_schema import UserResponse
 from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from config import settings
 from app.models.user import User
-from app.database.db import SessionLocal
-from app.utils.security import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, pwd_context
 from app.database.db import get_db
 
 # Security utilities for authentication and password management
