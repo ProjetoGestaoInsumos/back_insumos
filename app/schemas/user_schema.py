@@ -1,19 +1,18 @@
 from pydantic import BaseModel, EmailStr, field_validator
 from typing import Literal
+from enum import Enum
 
+class UserRole(str, Enum):
+    admin = 'admin'
+    tecnico = 'tecnico'
+    professor = 'professor'
+    
 class UserCreate(BaseModel):
     name: str
     email: EmailStr
     password: str
-    role: Literal['admin', 'técnico', 'professor']
-    
-    @field_validator('role')
-    @classmethod
-    def validate_role(cls, v):
-        roles = ['admin', 'técnico', 'professor']
-        if v not in roles:
-            raise ValueError('Role inválida. Escolha entre: admin, técnico ou professor.')
-        return v
+    role: UserRole
+
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
