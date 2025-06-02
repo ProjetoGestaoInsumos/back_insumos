@@ -17,8 +17,8 @@ class Movement(Base):
     type = Column(Enum(MovementType), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     created_by = Column(Integer, ForeignKey("users.id"), nullable=False)
-    pop_id = Column(Integer, ForeignKey("pops.id"), nullable=True)
+   
 
     stock = relationship("Stock", back_populates="movements")
     user = relationship("User")
-    pop = relationship("Pop", back_populates="movements")
+    

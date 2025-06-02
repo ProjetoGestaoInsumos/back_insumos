@@ -17,3 +17,4 @@ app.add_middleware(
 
 app.include_router(auth.router, prefix="/auth")
 app.include_router(resources.router, prefix="/items")
+app.include_router(movement.router)
