@@ -1,26 +1,22 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.schemas.item_schema import ItemCreate, ItemOut
-from app.services.item_service import get_items, create_item
-from app.database.db import SessionLocal
+from app.schemas.item_schema import ItemCreate, ItemResponse
+from app.database.db import get_db
 from app.models.item import Item
 
-router = APIRouter()
+router = APIRouter(prefix="/items", tags=["Items"])
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-@router.get("/", response_model=list[ItemOut])
+@router.get("/", response_model=list[ItemResponse])
 def read_items(db: Session = Depends(get_db)):
-    return get_items(db)
+    return db.query(Item).all()
 
-@router.post("/", response_model=ItemOut)
+@router.post("/", response_model=ItemResponse)
 def add_item(item: ItemCreate, db: Session = Depends(get_db)):
-    return create_item(db, item)
+    db_item = Item(**item.dict())
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
 
 @router.delete("/{id}")
 def delete_item(id: int, db: Session = Depends(get_db)):
@@ -28,7 +24,6 @@ def delete_item(id: int, db: Session = Depends(get_db)):
     if not item:
         raise HTTPException(status_code=404, detail="Item não encontrado")
 
-    # Exemplo de verificação (substitua conforme seu modelo real)
     used_in_recipe = False
     used_in_pop = False
     used_in_lot = False

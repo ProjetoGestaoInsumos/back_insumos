@@ -2,9 +2,11 @@ from pydantic import BaseModel
 
 class ItemCreate(BaseModel):
     name: str
+    unit: str
+    category: str
     description: str
 
-class ItemOut(ItemCreate):
+class ItemResponse(ItemCreate):
     id: int
 
     class Config:
