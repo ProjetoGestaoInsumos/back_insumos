@@ -7,6 +7,10 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+@app.get("/")
+def root():
+    return {"message": "API online 🚀"}
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -15,10 +19,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router, prefix="/auth")
-app.include_router(items.router, prefix="/items")
-app.include_router(stock.router, prefix="/stock")
-
-@app.get("/")
-def root():
-    return {"message": "API está funcionando"}
+app.include_router(auth.router)
+app.include_router(items.router)
+app.include_router(stock.router)
