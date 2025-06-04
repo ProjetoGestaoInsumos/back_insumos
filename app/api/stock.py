@@ -30,3 +30,17 @@ def delete_stock(id: int, db: Session = Depends(get_db)):
     db.delete(stock)
     db.commit()
     return {"detail": "Lote excluído com sucesso"}
+
+@router.put("/{id}", response_model=StockResponse)
+def update_stock(id: int, stock_update: StockCreate, db: Session = Depends(get_db)):
+    stock = db.query(Stock).filter(Stock.id == id).first()
+    if not stock:
+        raise HTTPException(status_code=404, detail="Lote não encontrado")
+
+    stock.item_id = stock_update.item_id
+    stock.quantity = stock_update.quantity
+    stock.expiration_date = stock_update.expiration_date
+
+    db.commit()
+    db.refresh(stock)
+    return stock

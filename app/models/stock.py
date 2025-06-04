@@ -1,8 +1,7 @@
 from sqlalchemy import Column, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import declarative_base
 from datetime import datetime
-
-Base = declarative_base()
+from app.database.db import Base
 
 class Stock(Base):
     __tablename__ = "stocks"

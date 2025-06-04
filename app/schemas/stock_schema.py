@@ -1,10 +1,11 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
 
 class StockCreate(BaseModel):
     item_id: int
     quantity: int
-    expiration_date: datetime | None = None
+    expiration_date: Optional[datetime] = None
 
 class StockResponse(StockCreate):
     id: int
