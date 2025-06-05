@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.database.db import get_db
 from app.models.stock import Stock
 from app.schemas.stock_schema import StockCreate, StockResponse
+from app.models.movement import Movement, MovementType
 
 router = APIRouter(prefix="/stock", tags=["Stock"])
 
@@ -12,6 +13,16 @@ def create_stock(stock: StockCreate, db: Session = Depends(get_db)):
     db.add(new_stock)
     db.commit()
     db.refresh(new_stock)
+
+    movement = Movement(
+        stock_id=new_stock.id,
+        quantity=new_stock.quantity,
+        type=MovementType.in_,
+        created_by=1
+    )
+    db.add(movement)
+    db.commit()
+
     return new_stock
 
 @router.get("/", response_model=list[StockResponse])
@@ -36,6 +47,17 @@ def update_stock(id: int, stock_update: StockCreate, db: Session = Depends(get_d
     stock = db.query(Stock).filter(Stock.id == id).first()
     if not stock:
         raise HTTPException(status_code=404, detail="Lote não encontrado")
+    
+    diff = stock_update.quantity - stock.quantity
+    if diff != 0:
+        movement_type = MovementType.in_ if diff > 0 else MovementType.out
+        movement = Movement(
+            stock_id=stock.id,
+            quantity=abs(diff),
+            type=movement_type,
+            created_by=1
+        )
+        db.add(movement)
 
     stock.item_id = stock_update.item_id
     stock.quantity = stock_update.quantity
