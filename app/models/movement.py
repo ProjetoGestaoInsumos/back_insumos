@@ -15,7 +15,7 @@ class Movement(Base):
     stock_id = Column(Integer, ForeignKey("stocks.id"), nullable=False)
     quantity = Column(Integer, nullable=False)
     type = Column(Enum(MovementType), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     created_by = Column(Integer, ForeignKey("users.id"), nullable=False)
    
 

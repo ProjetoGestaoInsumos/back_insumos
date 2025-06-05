@@ -17,6 +17,8 @@ class MovementResponse(BaseModel):
     type: MovementType
     created_at: datetime
     created_by: int
+    item_name: Optional[str] = None
+    user_name: Optional[str] = None
     
 
     class Config:
