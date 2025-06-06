@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from models.pop import POP
-from schemas.pop import POPCreate, POPResponse, POPCheckRequest, POPCheckResponse
+from schemas.pop_schema import POPCreate, POPResponse, POPCheckRequest, POPCheckResponse
 from database import get_db
 from models.recipe import Recipe
 from models.item import Item
