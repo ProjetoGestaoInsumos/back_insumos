@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from models.recipe import Recipe
-from schemas.recipe_schema import RecipeCreate
+from app.models.recipe import Recipe
+from app.schemas.recipe_schema import RecipeCreate
 
 def create_recipe(db: Session, recipe_data: RecipeCreate):
     recipe = Recipe(**recipe_data.dict())

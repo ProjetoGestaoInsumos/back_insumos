@@ -1,8 +1,10 @@
 from sqlalchemy.orm import Session
-from models.pop import POP
-from models.recipe import Recipe
-from models.item import Item
+from app.models.pop import POP
+from app.models.recipe import Recipe
+from app.models.item import Item
 from app.schemas.pop_schema import POPCreate, POPCheckRequest, POPCheckResponse
+from app.models.stock import Stock
+from sqlalchemy import func
 
 
 def create_pop_service(pop_data: POPCreate, db: Session) -> POP:
@@ -24,39 +26,33 @@ def list_pops_service(db: Session):
 
 
 def check_pop_service(data: POPCheckRequest, db: Session) -> POPCheckResponse:
-    """
-    Check item availability for a given recipe and requested quantity.
-    Returns available and missing items.
-    """
-
-    recipe_id = data.recipe_id
-    requested_quantity = data.requested_quantity or 1
-
-    # Get all POPs related to the recipe
-    pops = db.query(POP).filter(POP.recipe_id == recipe_id).all()
-    if not pops:
+    recipe = db.query(Recipe).filter(Recipe.id == data.recipe_id).first()
+    if not recipe:
         return POPCheckResponse(
             available={},
             missing={},
             status="recipe not found"
         )
 
+    requested_quantity = data.requested_quantity or 1
+
     available_items = {}
     missing_items = {}
 
-    for pop in pops:
-        item = db.query(Item).filter(Item.id == pop.item_id).first()
-
+    for ingredient in recipe.ingredients:
+        item = db.query(Item).filter(Item.id == ingredient["item_id"]).first()
         if not item:
-            missing_items[f"Item ID {pop.item_id}"] = pop.quantity * requested_quantity
+            missing_items[f"Item ID {ingredient['item_id']}"] = float(ingredient["quantity"]) * requested_quantity
             continue
 
-        required_quantity = pop.quantity * requested_quantity
+        required_quantity = float(ingredient["quantity"]) * requested_quantity
 
-        if item.stock_quantity >= required_quantity:
+        stock_sum = db.query(func.sum(Stock.quantity)).filter(Stock.item_id == item.id).scalar() or 0
+
+        if stock_sum >= required_quantity:
             available_items[item.name] = required_quantity
         else:
-            missing_items[item.name] = required_quantity - item.stock_quantity
+            missing_items[item.name] = required_quantity - stock_sum
 
     status = "valid" if not missing_items else "missing items"
 
