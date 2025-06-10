@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.database.db import Base
 
@@ -11,3 +12,6 @@ class Stock(Base):
     quantity = Column(Integer, nullable=False)
     expiration_date = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    movements = relationship("Movement", back_populates="stock")
+    item = relationship("Item")
