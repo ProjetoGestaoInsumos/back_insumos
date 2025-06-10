@@ -3,7 +3,7 @@ from typing import List, Optional
 
 class Ingredient(BaseModel):
     item_id: int
-    quantity: str
+    quantity: float
 
 class RecipeBase(BaseModel):
     name: str

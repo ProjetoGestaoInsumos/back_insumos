@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app.models.pop import POP
-from app.schemas.pop_schema import POPCreate, POPResponse, POPCheckRequest, POPCheckResponse, POPStatusUpdate
+from app.schemas.pop_schema import POPCreate, POPResponse, POPStatusUpdate
 from app.database.db import get_db
 from app.models.recipe import Recipe
 from app.models.item import Item
@@ -33,15 +33,13 @@ def list_pop(db: Session = Depends(get_db)):
     result = []
     for pop in pops:
         docente = db.query(User).filter(User.id == pop.docente_id).first()
+        recipe = db.query(Recipe).filter(Recipe.id == pop.recipe_id).first()
         result.append({
             **pop.__dict__,
-            "docente_nome": docente.nome if docente else ""
+            "docente_nome": docente.name if docente else "",
+            "recipe_name": recipe.name if recipe else ""
         })
     return result
-
-@router.post("/pop/check", response_model=POPCheckResponse)
-def check_pop(data: POPCheckRequest, db: Session = Depends(get_db)):
-    return {"available": {}, "missing": {}, "status": "valid"}
 
 @router.put("/pop/{pop_id}/status")
 def update_status(pop_id: int, update: POPStatusUpdate, db: Session = Depends(get_db)):

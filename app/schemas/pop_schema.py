@@ -43,21 +43,21 @@ class POPResponse(BaseModel):
     status: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
-class POPCheckRequest(BaseModel):
-    recipe_id: int
-    requested_quantity: Optional[int] = 1  # optional, default is 1
+# class POPCheckRequest(BaseModel):
+#     recipe_id: int
+#     requested_quantity: Optional[int] = 1  # optional, default is 1
 
-    class Config:
-        orm_mode = True
+#     class Config:
+#         orm_mode = True
 
 
-class POPCheckResponse(BaseModel):
-    available: Dict[str, int]
-    missing: Dict[str, int]
-    status: str
+#class POPCheckResponse(BaseModel):
+#    available: Dict[str, int]
+#    missing: Dict[str, int]
+#    status: str
 
-    class Config:
-        orm_mode = True
+#    class Config:
+#        orm_mode = True
