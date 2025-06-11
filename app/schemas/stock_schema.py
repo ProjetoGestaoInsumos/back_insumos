@@ -4,7 +4,7 @@ from typing import Optional
 
 class StockCreate(BaseModel):
     item_id: int
-    quantity: int
+    quantity: float
     expiration_date: Optional[datetime] = None
 
 class StockResponse(StockCreate):

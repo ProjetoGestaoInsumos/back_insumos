@@ -1,9 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database.db import Base, engine
-from app.api import auth, items, stock
-from app.api import movement
-
+from app.api import auth, items, stock, recipe, pop, movement
 
 Base.metadata.create_all(bind=engine)
 
@@ -25,3 +23,5 @@ app.include_router(auth.router)
 app.include_router(items.router)
 app.include_router(stock.router)
 app.include_router(movement.router)
+app.include_router(recipe.router)
+app.include_router(pop.router)

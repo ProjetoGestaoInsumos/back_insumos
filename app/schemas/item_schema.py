@@ -1,9 +1,10 @@
 from pydantic import BaseModel
+from app.models.item import UnitEnum, CategoryEnum
 
 class ItemCreate(BaseModel):
     name: str
-    unit: str
-    category: str
+    unit: UnitEnum
+    category: CategoryEnum
     description: str
 
 class ItemResponse(ItemCreate):

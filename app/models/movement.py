@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Enum
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Enum, Float
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.database.db import Base
@@ -13,7 +13,7 @@ class Movement(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     stock_id = Column(Integer, ForeignKey("stocks.id"), nullable=False)
-    quantity = Column(Integer, nullable=False)
+    quantity = Column(Float, nullable=False)
     type = Column(Enum(MovementType), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     created_by = Column(Integer, ForeignKey("users.id"), nullable=False)
@@ -21,4 +21,4 @@ class Movement(Base):
 
     stock = relationship("Stock", back_populates="movements")
     user = relationship("User")
-    
+
