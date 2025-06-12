@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from datetime import date
 from typing import Dict, Optional, List, Literal
 
@@ -19,7 +19,7 @@ class POPCreate(BaseModel):
     n_groups: int
     objective: Optional[str]
     extra_items: Optional[List[ExtraItem]] = []
-
+    email_destino: EmailStr
 
 class POPStatusUpdate(BaseModel):
     status: Literal["pendente", "aprovado", "cancelado"]
