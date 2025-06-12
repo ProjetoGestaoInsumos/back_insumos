@@ -8,22 +8,22 @@ from app.models.stock import Stock
 
 router = APIRouter(prefix="/movements", tags=["Movements"])
 
-@router.get("/movements", response_model=List[MovementResponse])
+@router.get("/movement")
 def get_movements(db: Session = Depends(get_db)):
     movements = db.query(Movement).options(
         joinedload(Movement.stock).joinedload(Stock.item),
         joinedload(Movement.user)
     ).all()
-    return [
-        MovementResponse(
-            id=m.id,
-            stock_id=m.stock_id,
-            quantity=m.quantity,
-            type=m.type,
-            created_at=m.created_at,
-            created_by=m.created_by,
-            item_name=m.stock.item.name if m.stock and m.stock.item else None,
-            user_name=m.user.name if m.user else None,
-        )
-        for m in movements
-    ]
+    result = []
+    for m in movements:
+        result.append({
+            "id": m.id,
+            "stock_id": m.stock_id,
+            "quantity": m.quantity,
+            "type": m.type,
+            "created_at": m.created_at,
+            "created_by": m.created_by,
+            "item_name": m.stock.item.name if m.stock and m.stock.item else None,
+            "user_name": m.user.name if m.user else None,
+        })
+    return result
