@@ -7,7 +7,7 @@ from app.models.item import Item
 from app.schemas.recipe_schema import RecipeCreate, RecipeRead
 from app.database.db import get_db
 
-router = APIRouter()
+router = APIRouter(prefix="/recipes", tags=["Recipes"])
 
 @router.post("/recipes", response_model=RecipeRead)
 def create_recipe(recipe: RecipeCreate, db: Session = Depends(get_db)):

@@ -10,7 +10,7 @@ from app.database.db import get_db
 from app.models.recipe import Recipe
 from app.models.user import User
 
-router = APIRouter()
+router = APIRouter(prefix="/pop", tags=["Pop"])
 
 @router.post("/pop", response_model=POPResponse)
 def create_pop(pop: POPCreate, db: Session = Depends(get_db)):

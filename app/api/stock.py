@@ -4,11 +4,15 @@ from app.database.db import get_db
 from app.models.stock import Stock
 from app.schemas.stock_schema import StockCreate, StockResponse
 from app.models.movement import Movement, MovementType
+from back_insumos.app.models.user import User
+from back_insumos.app.services.auth_service import get_current_user
 
 router = APIRouter(prefix="/stock", tags=["Stock"])
 
 @router.post("/", response_model=StockResponse)
-def create_stock(stock: StockCreate, db: Session = Depends(get_db)):
+def create_stock(stock: StockCreate, db: Session = Depends(get_db), 
+                 current_user: User = Depends(get_current_user)):
+    
     new_stock = Stock(**stock.dict())
     db.add(new_stock)
     db.commit()
@@ -18,7 +22,7 @@ def create_stock(stock: StockCreate, db: Session = Depends(get_db)):
         stock_id=new_stock.id,
         quantity=new_stock.quantity,
         type=MovementType.in_,
-        created_by=1
+        created_by=current_user.id
     )
     db.add(movement)
     db.commit()

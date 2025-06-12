@@ -6,7 +6,7 @@ from app.models.movement import Movement
 from app.database.db import get_db
 from app.models.stock import Stock
 
-router = APIRouter()
+router = APIRouter(prefix="/movements", tags=["Movements"])
 
 @router.get("/movement")
 def get_movements(db: Session = Depends(get_db)):
