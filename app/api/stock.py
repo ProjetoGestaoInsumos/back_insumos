@@ -4,8 +4,8 @@ from app.database.db import get_db
 from app.models.stock import Stock
 from app.schemas.stock_schema import StockCreate, StockResponse
 from app.models.movement import Movement, MovementType
-from back_insumos.app.models.user import User
-from back_insumos.app.services.auth_service import get_current_user
+from app.models.user import User
+from app.services.auth_service import get_current_user
 
 router = APIRouter(prefix="/stock", tags=["Stock"])
 
