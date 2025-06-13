@@ -47,7 +47,7 @@ def create_pop(pop: POPCreate, db: Session = Depends(get_db)):
 
     return {**pop_data, "email_status": email_status}
 
-@router.get("/pop", response_model=List[POPResponse])
+@router.get("/", response_model=List[POPResponse])
 def list_pop(db: Session = Depends(get_db)):
     pops = db.query(POP).all()
     result = []
@@ -61,7 +61,7 @@ def list_pop(db: Session = Depends(get_db)):
         })
     return result
 
-@router.put("/pop/{pop_id}/status")
+@router.put("/{pop_id}/status")
 def update_status(pop_id: int, update: POPStatusUpdate, db: Session = Depends(get_db)):
     pop = db.query(POP).filter(POP.id == pop_id).first()
     if not pop:
