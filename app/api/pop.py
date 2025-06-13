@@ -12,7 +12,7 @@ from app.models.user import User
 
 router = APIRouter(prefix="/pop", tags=["Pop"])
 
-@router.post("/pop", response_model=POPResponse)
+@router.post("/", response_model=POPResponse)
 def create_pop(pop: POPCreate, db: Session = Depends(get_db)):
     pop_dict = pop.dict()
     email_destino = pop_dict.pop("email_destino")

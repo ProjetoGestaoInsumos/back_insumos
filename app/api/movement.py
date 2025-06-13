@@ -8,7 +8,7 @@ from app.models.stock import Stock
 
 router = APIRouter(prefix="/movements", tags=["Movements"])
 
-@router.get("/movement")
+@router.get("/")
 def get_movements(db: Session = Depends(get_db)):
     movements = db.query(Movement).options(
         joinedload(Movement.stock).joinedload(Stock.item),

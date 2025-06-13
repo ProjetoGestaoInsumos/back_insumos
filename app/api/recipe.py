@@ -9,7 +9,7 @@ from app.database.db import get_db
 
 router = APIRouter(prefix="/recipes", tags=["Recipes"])
 
-@router.post("/recipes", response_model=RecipeRead)
+@router.post("/", response_model=RecipeRead)
 def create_recipe(recipe: RecipeCreate, db: Session = Depends(get_db)):
     item_ids = [ing.item_id for ing in recipe.ingredients]
     items = db.query(Item).filter(Item.id.in_(item_ids)).all()

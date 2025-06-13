@@ -47,7 +47,8 @@ def delete_stock(id: int, db: Session = Depends(get_db)):
     return {"detail": "Lote excluído com sucesso"}
 
 @router.put("/{id}", response_model=StockResponse)
-def update_stock(id: int, stock_update: StockCreate, db: Session = Depends(get_db)):
+def update_stock(id: int, stock_update: StockCreate, db: Session = Depends(get_db), 
+                 current_user: User = Depends(get_current_user)):
     stock = db.query(Stock).filter(Stock.id == id).first()
     if not stock:
         raise HTTPException(status_code=404, detail="Lote não encontrado")
@@ -59,7 +60,7 @@ def update_stock(id: int, stock_update: StockCreate, db: Session = Depends(get_d
             stock_id=stock.id,
             quantity=abs(diff),
             type=movement_type,
-            created_by=1
+            created_by=current_user.id
         )
         db.add(movement)
 
