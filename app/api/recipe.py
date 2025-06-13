@@ -9,7 +9,7 @@ from app.database.db import get_db
 
 router = APIRouter(prefix="/recipes", tags=["Recipes"])
 
-@router.post("/recipes", response_model=RecipeRead)
+@router.post("/", response_model=RecipeRead)
 def create_recipe(recipe: RecipeCreate, db: Session = Depends(get_db)):
     item_ids = [ing.item_id for ing in recipe.ingredients]
     items = db.query(Item).filter(Item.id.in_(item_ids)).all()
@@ -26,7 +26,7 @@ def create_recipe(recipe: RecipeCreate, db: Session = Depends(get_db)):
     db.refresh(db_recipe)
     return db_recipe
 
-@router.get("/recipes", response_model=List[RecipeRead])
+@router.get("/", response_model=List[RecipeRead])
 def list_recipes(db: Session = Depends(get_db)):
     return db.query(Recipe).all()
 
@@ -37,7 +37,7 @@ def get_recipe(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Recipe not found")
     return recipe
 
-@router.put("/recipes/{id}", response_model=RecipeRead)
+@router.put("/{id}", response_model=RecipeRead)
 def update_recipe(
     id: int,
     recipe_update: RecipeCreate,
